@@ -29,14 +29,13 @@ salesorderheader_with_sk as (
         address.address_sk as address_fk,
         customer.customer_sk as customer_fk,
         creditcard.creditcard_sk as creditcard_fk,
+        salesorderheadersalesreason.salesorderheadersalesreason_sk as salesorderheadersalesreason_fk,
         salesorderheader.orderdate,
         salesorderheader.status,
         salesorderheader.subtotal,
         salesorderheader.taxamt,
         salesorderheader.freight,
-        salesorderheader.totaldue,
-        salesorderheadersalesreason.salesreasonname,
-        salesorderheadersalesreason.salesreasontype
+        salesorderheader.totaldue
     from {{ref('stg_salesorderheader')}} as salesorderheader
     left join address on
         salesorderheader.shiptoaddressid = address.addressid
@@ -54,8 +53,7 @@ salesorderdetail_with_sk as (
         product.product_sk as product_fk,
         salesorderdetail.orderqty,
         salesorderdetail.unitprice,
-        salesorderdetail.unitpricediscount,
-        product.name as productname
+        salesorderdetail.unitpricediscount
     from {{ref('stg_salesorderdetail')}} as salesorderdetail
     left join product on
         salesorderdetail.productid = product.productid
@@ -67,19 +65,17 @@ final as (
         salesorderheader_with_sk.address_fk,
         salesorderheader_with_sk.customer_fk,
         salesorderheader_with_sk.creditcard_fk,
+        salesorderheader_with_sk.salesorderheadersalesreason_fk,
         salesorderheader_with_sk.orderdate,
         salesorderheader_with_sk.status,
         salesorderheader_with_sk.subtotal,
         salesorderheader_with_sk.taxamt,
         salesorderheader_with_sk.freight,
         salesorderheader_with_sk.totaldue,
-        salesorderheader_with_sk.salesreasonname,
-        salesorderheader_with_sk.salesreasontype,
         salesorderdetail_with_sk.product_fk,
         salesorderdetail_with_sk.orderqty,
         salesorderdetail_with_sk.unitprice,
         salesorderdetail_with_sk.unitpricediscount,
-        salesorderdetail_with_sk.productname
     from salesorderheader_with_sk
     left join salesorderdetail_with_sk on
         salesorderheader_with_sk.salesorderid = salesorderdetail_with_sk.salesorderid

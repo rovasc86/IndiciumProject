@@ -8,14 +8,21 @@ sources:
         columns:
           - name: addressid
             description: primary key
-        tests:
-        - unique
-        - not_null
+            tests:
+              - unique
+              - not_null
 
       - name: salesorderdetail
       - name: salesorderheader
       - name: product
       - name: creditcard
+        columns:
+          - name: cardtype
+            description: types of creditcard
+            tests:
+              - accepted_values:
+                  values: ['Vista','Distinguish','SuperiorCard','ColonialVoice']
+
       - name: salesorderheadersalesreason
       - name: salesreason
       - name: customer

@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: IndiciumDataset
+    description: Database for Indicium Project
+    tables:
+      - name: address
+        columns:
+          - name: addressid
+            description: primary key
+        tests:
+        - unique
+        - not_null
+
+      - name: salesorderdetail
+      - name: salesorderheader
+      - name: product
+      - name: creditcard
+      - name: salesorderheadersalesreason
+      - name: salesreason
+      - name: customer
+      - name: person
+      - name: stateprovince
+      - name: countryregion
+                                           
